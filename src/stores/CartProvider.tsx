@@ -22,15 +22,24 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (product: { id: number; title: string; price: number; image: string }) => {
+  const addToCart = (
+    product: { id: number; title: string; price: number; image: string },
+    color?: string,
+    size?: string,
+    quantity: number = 1
+  ) => {
     setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+      const existing = prev.find(
+        (item) => item.id === product.id && item.color === color && item.size === size
+      );
       if (existing) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product.id && item.color === color && item.size === size
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, color, size, quantity }];
     });
   };
 
