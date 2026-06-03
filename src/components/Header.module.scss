@@ -68,24 +68,50 @@
   }
 }
 
-.ctaBtn {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-hover) 100%);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.25rem;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.9rem;
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+}
+
+.cartContainer {
+  position: relative;
   cursor: pointer;
-  box-shadow: 0 4px 12px var(--accent-glow);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background-color: rgba(255, 255, 255, 0.05);
   }
 }
+
+.cartIcon {
+  font-size: 1.4rem;
+}
+
+.cartCount {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: var(--accent-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
