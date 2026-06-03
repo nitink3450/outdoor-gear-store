@@ -1,0 +1,122 @@
+.galleryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.mainImageWrapper {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  height: 480px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  cursor: zoom-in;
+
+  @media (max-width: 480px) {
+    height: 300px;
+  }
+}
+
+.mainImageContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.05s ease-out;
+}
+
+.productImg {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.thumbnailsContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+
+.thumbnailBtn {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+
+  &:hover {
+    border-color: var(--text-secondary);
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+.activeThumbnail {
+  border-color: var(--accent-primary);
+
+  &:hover {
+    border-color: var(--accent-primary);
+  }
+}
+
+.dotIndicator {
+  display: none;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.activeDot {
+  background-color: var(--accent-primary);
+}

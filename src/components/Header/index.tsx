@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../stores/CartContext";
+import { useCart } from "../../stores/CartContext";
 import styles from "./Header.module.scss";
 
 interface HeaderProps {
