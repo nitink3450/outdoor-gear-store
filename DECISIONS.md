@@ -4,7 +4,7 @@
 
 ---
 
-## 1. API Integration: Why i choose - https://fakestoreapi.com?
+## 1. API Integration: Why i choose - https://fakestoreapi.com ?
 
 ### Why Fake Store API?
 
@@ -21,5 +21,11 @@
 | No available stock data | Mocked stock data using custom values |
 | No Image arrays         | Mocked with custom images using CSS   |
 | No discount prices      | Mocked using higher product price     |
+| No discount prices      | Mocked using higher product price     |
+
+### Extra implementations
+
+1. Implemented stock based on color and reduce the stock when added to cart
+2. Implemented quantity selector with max quantity based on stock
 
 ---
