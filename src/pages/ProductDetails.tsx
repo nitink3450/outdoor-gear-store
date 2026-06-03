@@ -147,6 +147,7 @@ export default function ProductDetails() {
       selectedSizeName,
       quantity,
     );
+    setQuantity(1);
   };
 
   // dynamic list of sizes with their current stock for the selected color

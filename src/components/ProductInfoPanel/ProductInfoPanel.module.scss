@@ -37,7 +37,7 @@
 .salePrice {
   font-size: 2rem;
   font-weight: 800;
-  color: #ef4444;
+  color: #24be19;
 }
 
 .originalPrice {
@@ -48,9 +48,9 @@
 }
 
 .saleBadge {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: #24be1925;
+  color: #24be19;
+  border: 1px solid rgba(15, 255, 28, 0.123);
   padding: 0.25rem 0.75rem;
   border-radius: 99px;
   font-size: 0.8rem;
@@ -78,7 +78,6 @@
   color: var(--text-primary);
 }
 
-/* Swatch Group */
 .swatchGroup {
   display: flex;
   gap: 0.75rem;
@@ -95,16 +94,28 @@
   padding: 0;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border: 2px solid white;
+      border-radius: 50%;
+      pointer-events: none;
+    }
   }
 }
 
-.activeSwatch {
-  border-color: white;
-  box-shadow: 0 0 0 2px var(--accent-primary);
+.activeSwatch::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-/* Size Group */
 .sizeGroup {
   display: flex;
   gap: 0.75rem;
@@ -163,7 +174,6 @@
   color: var(--text-muted);
 }
 
-/* Qty Selector */
 .qtyContainer {
   display: flex;
   align-items: center;
@@ -207,9 +217,12 @@
   color: var(--text-muted);
 }
 
-/* Add Button */
 .addBtn {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary) 0%,
+    var(--accent-primary-hover) 100%
+  );
   color: white;
   border: none;
   padding: 1.1rem;
@@ -218,7 +231,10 @@
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 4px 14px var(--accent-glow);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
   width: 100%;
   text-align: center;
   margin-top: 1rem;
@@ -246,11 +262,41 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   display: flex;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.4rem;
   margin-top: 0.5rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px dashed var(--border-color);
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
+  line-height: 1.4;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+.deliveryHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.deliveryIcon {
+  font-size: 1.15rem;
+}
+
+.deliveryDesc {
+  color: var(--text-secondary);
+
+  @media (max-width: 576px) {
+    padding-left: 1.55rem;
+    font-size: 0.85rem;
+  }
 }

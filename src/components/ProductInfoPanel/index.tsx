@@ -43,14 +43,18 @@ export default function ProductInfoPanel({
 
   return (
     <div className={styles.infoColumn}>
-      <span className={styles.brand}>GearNua</span>
+      <span className={styles.brand}>Gear Store</span>
       <h1 className={styles.title}>{product.title}</h1>
 
       <div className={styles.priceRow}>
         {isSale ? (
           <>
-            <span className={styles.salePrice}>${product.price.toFixed(2)}</span>
-            <span className={styles.originalPrice}>${originalPrice.toFixed(2)}</span>
+            <span className={styles.salePrice}>
+              ${product.price.toFixed(2)}
+            </span>
+            <span className={styles.originalPrice}>
+              ${originalPrice.toFixed(2)}
+            </span>
             <span className={styles.saleBadge}>On Sale</span>
           </>
         ) : (
@@ -97,8 +101,14 @@ export default function ProductInfoPanel({
                 onClick={() => setSelectedSizeName(opt.size)}
               >
                 <span className={styles.sizeName}>{opt.size}</span>
-                {isLowStock && <span className={styles.stockWarning}>({opt.stock} left)</span>}
-                {isSoldOut && <span className={styles.stockSoldOut}>Sold out</span>}
+                {isLowStock && (
+                  <span className={styles.stockWarning}>
+                    ({opt.stock} left)
+                  </span>
+                )}
+                {isSoldOut && (
+                  <span className={styles.stockSoldOut}>Sold out</span>
+                )}
               </button>
             );
           })}
@@ -112,7 +122,11 @@ export default function ProductInfoPanel({
           <button
             className={styles.qtyBtn}
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            disabled={!selectedSizeName || currentSelectedSizeStock === 0 || quantity <= 1}
+            disabled={
+              !selectedSizeName ||
+              currentSelectedSizeStock === 0 ||
+              quantity <= 1
+            }
           >
             -
           </button>
@@ -129,7 +143,9 @@ export default function ProductInfoPanel({
             +
           </button>
           {selectedSizeName && currentSelectedSizeStock > 0 && (
-            <span className={styles.maxStockText}>Max available: {currentSelectedSizeStock}</span>
+            <span className={styles.maxStockText}>
+              Max available: {currentSelectedSizeStock}
+            </span>
           )}
         </div>
       </div>
@@ -143,23 +159,35 @@ export default function ProductInfoPanel({
         {!selectedSizeName
           ? "Select a Size"
           : currentSelectedSizeStock === 0
-          ? "Sold Out"
-          : "Add to Cart"}
+            ? "Sold Out"
+            : "Add to Cart"}
       </button>
 
       {/* Delivery predictions */}
       {product && product.price > 0 && (
-        <p className={styles.deliveryEstimate}>
+        <div className={styles.deliveryEstimate}>
           {product.price >= 100 ? (
             <>
-              📦 <strong>Fast Delivery:</strong> Estimated delivery to your location in 2-3 business days.
+              <div className={styles.deliveryHeader}>
+                <span className={styles.deliveryIcon}>📦</span>
+                <strong>Fast Delivery:</strong>
+              </div>
+              <div className={styles.deliveryDesc}>
+                Estimated delivery to your location in 2-3 business days.
+              </div>
             </>
           ) : (
             <>
-              🚚 <strong>Standard Delivery:</strong> Estimated delivery to your location in 5-7 business days.
+              <div className={styles.deliveryHeader}>
+                <span className={styles.deliveryIcon}>🚚</span>
+                <strong>Standard Delivery:</strong>
+              </div>
+              <div className={styles.deliveryDesc}>
+                Estimated delivery to your location in 5-7 business days.
+              </div>
             </>
           )}
-        </p>
+        </div>
       )}
     </div>
   );

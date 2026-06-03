@@ -10,7 +10,9 @@ export default function ImageGallery({ image, title }: ImageGalleryProps) {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
+  const slidesContainerRef = useRef<HTMLDivElement>(null);
   const thumbsContainerRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef<boolean>(false);
 
   const galleryImages = [
     { label: "Front View", style: {} },
@@ -25,37 +27,74 @@ export default function ImageGallery({ image, title }: ImageGalleryProps) {
     setZoomPos({ x, y });
   };
 
+  const scrollToSlide = (idx: number) => {
+    const container = slidesContainerRef.current;
+    if (container) {
+      isScrollingRef.current = true;
+      setActiveImageIndex(idx);
+      container.scrollTo({
+        left: idx * container.clientWidth,
+        behavior: "smooth",
+      });
+      // Release scroll lock after transition completes
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 500);
+    }
+  };
+
+  const handleScroll = () => {
+    if (isScrollingRef.current) return;
+    const container = slidesContainerRef.current;
+    if (container) {
+      const scrollPosition = container.scrollLeft;
+      const index = Math.round(scrollPosition / container.clientWidth);
+      setActiveImageIndex(index);
+    }
+  };
+
   return (
     <div className={styles.galleryColumn}>
-      <div
-        className={styles.mainImageWrapper}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsZoomed(true)}
-        onMouseLeave={() => setIsZoomed(false)}
-      >
+      <div className={styles.mainImageWrapper}>
         <div
-          className={styles.mainImageContainer}
-          style={{
-            transform: isZoomed ? "scale(2.2)" : "scale(1)",
-            transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-          }}
+          ref={slidesContainerRef}
+          className={styles.slidesContainer}
+          onScroll={handleScroll}
         >
-          <img
-            src={image}
-            alt={title}
-            className={styles.productImg}
-            style={galleryImages[activeImageIndex].style}
-          />
+          {galleryImages.map((img, idx) => (
+            <div
+              key={idx}
+              className={styles.slide}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsZoomed(true)}
+              onMouseLeave={() => setIsZoomed(false)}
+            >
+              <div
+                className={styles.imageZoomWrapper}
+                style={{
+                  transform: isZoomed && activeImageIndex === idx ? "scale(2.2)" : "scale(1)",
+                  transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                }}
+              >
+                <img
+                  src={image}
+                  alt={`${title} - ${img.label}`}
+                  className={styles.productImg}
+                  style={img.style}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Swatches */}
+      {/* Swatches (hidden on mobile) */}
       <div className={styles.thumbnailsContainer} ref={thumbsContainerRef}>
         {galleryImages.map((img, idx) => (
           <button
             key={idx}
             className={`${styles.thumbnailBtn} ${activeImageIndex === idx ? styles.activeThumbnail : ""}`}
-            onClick={() => setActiveImageIndex(idx)}
+            onClick={() => scrollToSlide(idx)}
             aria-label={`View ${img.label}`}
           >
             <img src={image} alt={img.label} style={img.style} />
@@ -63,13 +102,13 @@ export default function ImageGallery({ image, title }: ImageGalleryProps) {
         ))}
       </div>
 
-      {/* Pagination dots */}
+      {/* Pagination dots (with improved premium design) */}
       <div className={styles.dotIndicator}>
         {galleryImages.map((_, idx) => (
           <span
             key={idx}
             className={`${styles.dot} ${activeImageIndex === idx ? styles.activeDot : ""}`}
-            onClick={() => setActiveImageIndex(idx)}
+            onClick={() => scrollToSlide(idx)}
           />
         ))}
       </div>
