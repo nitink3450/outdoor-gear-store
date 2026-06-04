@@ -2,12 +2,18 @@ import { useCart } from "../../stores/CartContext";
 import styles from "./CartSidebar.module.scss";
 
 export default function CartSidebar() {
-  const { cartItems, cartCount, isCartOpen, toggleCart, removeCartItem, clearCart } =
-    useCart();
+  const {
+    cartItems,
+    cartCount,
+    isCartOpen,
+    toggleCart,
+    removeCartItem,
+    clearCart,
+  } = useCart();
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   return (
@@ -70,7 +76,9 @@ export default function CartSidebar() {
                       )}
                     </div>
                     <div className={styles.itemBottom}>
-                      <span className={styles.itemQty}>Qty: {item.quantity}</span>
+                      <span className={styles.itemQty}>
+                        Qty: {item.quantity}
+                      </span>
                       <span className={styles.itemPrice}>
                         ${(item.price * item.quantity).toFixed(2)}
                       </span>
@@ -83,7 +91,23 @@ export default function CartSidebar() {
                     }
                     aria-label={`Remove ${item.title}`}
                   >
-                    🗑
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                      <path d="M3 6h18" />
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
                   </button>
                 </li>
               ))}

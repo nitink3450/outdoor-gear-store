@@ -222,7 +222,6 @@ export default function ProductDetails() {
         />
       </div>
 
-      {/* Below-fold: Description, Specifications, Reviews */}
       <ProductDetailsSection description={product.description} />
     </div>
   );
