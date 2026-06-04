@@ -1,0 +1,8 @@
+# User-Agent rules for Outdoor Gear Nua
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Host
+# Host: outdoor-gear-nua.vercel.app
+
