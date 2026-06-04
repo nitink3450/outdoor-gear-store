@@ -24,6 +24,8 @@ interface ProductInfoPanelProps {
   currentSelectedSizeStock: number;
   dynamicSizes: { size: string; stock: number }[];
   handleAddToCart: () => void;
+  isAdding: boolean;
+  feedback: { type: "success" | "error"; message: string } | null;
 }
 
 export default function ProductInfoPanel({
@@ -37,6 +39,8 @@ export default function ProductInfoPanel({
   currentSelectedSizeStock,
   dynamicSizes,
   handleAddToCart,
+  isAdding,
+  feedback,
 }: ProductInfoPanelProps) {
   const isSale = product.price > 50; // mocked sale price for items > $50
   const originalPrice = isSale ? product.price * 1.3 : product.price;
@@ -154,14 +158,35 @@ export default function ProductInfoPanel({
       <button
         className={styles.addBtn}
         onClick={handleAddToCart}
-        disabled={!selectedSizeName || currentSelectedSizeStock === 0}
+        disabled={!selectedSizeName || currentSelectedSizeStock === 0 || isAdding}
       >
-        {!selectedSizeName
-          ? "Select a Size"
-          : currentSelectedSizeStock === 0
-            ? "Sold Out"
-            : "Add to Cart"}
+        {isAdding ? (
+          <div className={styles.loaderWrapper}>
+            <span className={styles.buttonSpinner} />
+            <span>Adding to Cart...</span>
+          </div>
+        ) : !selectedSizeName ? (
+          "Select a Size"
+        ) : currentSelectedSizeStock === 0 ? (
+          "Sold Out"
+        ) : (
+          "Add to Cart"
+        )}
       </button>
+
+      {/* Feedback Alert Banner */}
+      {feedback && (
+        <div
+          className={`${styles.feedbackBanner} ${
+            feedback.type === "success" ? styles.successFeedback : styles.errorFeedback
+          }`}
+        >
+          <span className={styles.feedbackIcon}>
+            {feedback.type === "success" ? "✓" : "⚠"}
+          </span>
+          <span className={styles.feedbackText}>{feedback.message}</span>
+        </div>
+      )}
 
       {/* Delivery predictions */}
       {product && product.price > 0 && (

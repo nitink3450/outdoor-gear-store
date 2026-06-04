@@ -67,6 +67,15 @@ export default function ProductDetails() {
   );
 
   const [quantity, setQuantity] = useState<number>(1);
+  const [isAdding, setIsAdding] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  useEffect(() => {
+    setFeedback(null);
+  }, [selectedColor, selectedSizeName, quantity]);
 
   const getAvailableStock = (colorName: string, sizeName: string): number => {
     if (!product) return 0;
@@ -135,20 +144,53 @@ export default function ProductDetails() {
     );
   }
 
-  const handleAddToCart = () => {
-    if (!selectedSizeName || currentSelectedSizeStock === 0) return;
-    addToCart(
-      {
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        image: product.image,
-      },
-      selectedColor.name,
-      selectedSizeName,
-      quantity,
-    );
-    setQuantity(1);
+  const handleAddToCart = async () => {
+    if (!selectedSizeName || currentSelectedSizeStock === 0 || isAdding) return;
+    setIsAdding(true);
+    setFeedback(null);
+
+    const mockAddToCartApi = () => {
+      return new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+          if (Math.random() < 0.1) {
+            reject(new Error("Network connection lost. Failed to add item."));
+          } else {
+            resolve();
+          }
+        }, 1200);
+      });
+    };
+
+    try {
+      await mockAddToCartApi();
+      addToCart(
+        {
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          image: product.image,
+        },
+        selectedColor.name,
+        selectedSizeName,
+        quantity,
+      );
+      setQuantity(1);
+      setFeedback({
+        type: "success",
+        message: `Successfully added ${quantity} item(s) to your cart!`,
+      });
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again.";
+      setFeedback({
+        type: "error",
+        message: errorMessage,
+      });
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   // dynamic list of sizes with their current stock for the selected color
@@ -175,6 +217,8 @@ export default function ProductDetails() {
           currentSelectedSizeStock={currentSelectedSizeStock}
           dynamicSizes={dynamicSizes}
           handleAddToCart={handleAddToCart}
+          isAdding={isAdding}
+          feedback={feedback}
         />
       </div>
 

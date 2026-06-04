@@ -118,6 +118,7 @@ outdoor-gear-store/
 - **Interactive Multi-Image Gallery:** Responsive gallery supporting desktop hover-to-zoom, thumbnail selection, and touch-friendly CSS scroll-snap transitions for mobile viewports.
 - **Below-Fold Tabbed Section:** Implements custom tabs displaying the API-fetched product description, detailed specifications (key-value table), and mock customer reviews (star ratings, date, verified buyer cards).
 - **Vercel SPA Handling:** Configured with `vercel.json` rewrites to guarantee React Router path transitions function on hard refreshes.
+- **Simulated Async Add to Cart:** The Add to Cart action mimics real-world network requests with a 1.2-second loading state, disabled actions to prevent duplicate requests, and a simulated 30% failure rate for robust validation.
 
 ---
 
@@ -129,6 +130,7 @@ A summary of key architectural choices:
 2. **Custom Scroll-Snapping Slider over Swiper.js:** Utilizes native CSS scroll snap points (`scroll-snap-type: x mandatory`). This reduces JavaScript bundle size and guarantees smooth native performance without React 19 version conflict concerns.
 3. **Context & Provider Code Separation:** We split `CartContext.tsx` and `CartProvider.tsx` into separate files. This preserves Vite's Hot Module Replacement (HMR) capabilities, as Vite's HMR requires component-only exports.
 4. **Tabs over Accordion for Below-Fold Section:** Chosen for desktop layout conventions, clean user focus, lack of vertical page layout shifts, and rapid tab switching.
+5. **Simulated API Latency & Failures:** Wired to a Promise-based timeout with a 30% random error simulation. This allows verification of UX loading indicator animations and error banner displays in real-world network congestion scenarios.
 
 ---
 

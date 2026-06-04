@@ -61,3 +61,14 @@
 - **Cleaner visual hierarchy:** A single active panel with a highlighted tab indicator gives a clear focus state. With accordions, multiple panels can be open simultaneously, splitting the user's attention.
 
 ---
+
+## 6. Simulated Async Add to Cart: Loading and Error States
+
+### Rationale
+In real-world e-commerce platforms, adding items to a cart is rarely an instantaneous local operation. It requires a backend API call to verify stock, lock inventory, and update the session state. To emulate this behavior, we wired the "Add to Cart" action to a mock async function.
+
+### Design Choices
+- **Simulated Latency:** We introduced a `1.2-second` delay using a Promise-based timeout. This simulates a real server latency and gives the user visual confirmation that their request is being processed.
+- **Button Loading State:** During the network simulation, the Add to Cart button is disabled to prevent duplicate submissions, and the text transitions to "Adding to Cart..." alongside a spinning indicator.
+- **Simulated Network Failures:** We introduced a `30%` random failure rate (using `Math.random() < 0.3`) to mimic connectivity drops or server timeouts.
+- **Graceful Error Recovery:** If a failure occurs, the UI displays a clear banner with error details. Changing product color, size, or quantity resets the feedback state, encouraging the user to retry the action.
