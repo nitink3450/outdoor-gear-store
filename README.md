@@ -12,6 +12,7 @@
 4. [Design Decisions](#-design-decisions)
 5. [Known Trade-offs & Limitations](#-known-trade-offs--limitations)
 6. [Tech Stack](#-tech-stack)
+7. [Performance & SEO](#-performance--seo)
 
 ---
 
@@ -153,3 +154,12 @@ A summary of key architectural choices:
 - **Routing:** React Router v7
 - **Hosting:** Vercel
 - **APIs:** Fake Store API
+
+---
+
+## ⚡ Performance & SEO
+
+The store is highly optimized for fast page loads, accessibility, best practices, and search engines (SEO). You can check the live audit reports via Google PageSpeed Insights:
+
+- **Desktop Report:** [PageSpeed Insights (Desktop)](https://pagespeed.web.dev/analysis/https-gear-store-nua-vercel-app-product-1/s3uosm5380?form_factor=desktop)
+- **Mobile Report:** [PageSpeed Insights (Mobile)](https://pagespeed.web.dev/analysis/https-gear-store-nua-vercel-app-product-1/s3uosm5380?form_factor=mobile)
