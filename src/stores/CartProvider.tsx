@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { ReactNode } from "react";
 import { CartContext } from "./CartContext";
 import type { CartItem } from "./CartContext";
@@ -14,6 +14,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   });
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   useEffect(() => {
     try {
       localStorage.setItem("outdoor_store_cart", JSON.stringify(cartItems));
@@ -21,6 +23,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       console.error("Failed to save cart to localStorage", error);
     }
   }, [cartItems]);
+
+  const toggleCart = useCallback(() => {
+    setIsCartOpen((prev) => !prev);
+  }, []);
 
   const addToCart = (
     product: { id: number; title: string; price: number; image: string },
@@ -55,12 +61,31 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const removeCartItem = (id: number, color?: string, size?: string) => {
+    setCartItems((prev) =>
+      prev.filter(
+        (item) => !(item.id === id && item.color === color && item.size === size)
+      )
+    );
+  };
+
   const clearCart = () => setCartItems([]);
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cartItems, cartCount, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        cartCount,
+        isCartOpen,
+        toggleCart,
+        addToCart,
+        removeFromCart,
+        removeCartItem,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -13,6 +13,8 @@ export interface CartItem {
 export interface CartContextType {
   cartItems: CartItem[];
   cartCount: number;
+  isCartOpen: boolean;
+  toggleCart: () => void;
   addToCart: (
     product: { id: number; title: string; price: number; image: string },
     color?: string,
@@ -20,6 +22,7 @@ export interface CartContextType {
     quantity?: number
   ) => void;
   removeFromCart: (id: number) => void;
+  removeCartItem: (id: number, color?: string, size?: string) => void;
   clearCart: () => void;
 }
 

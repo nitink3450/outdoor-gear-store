@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ siteName }) => {
-  const { cartCount } = useCart();
+  const { cartCount, toggleCart } = useCart();
 
   return (
     <header className={styles.header}>
@@ -19,7 +19,7 @@ export const Header: FC<HeaderProps> = ({ siteName }) => {
           </Link>
         </div>
         <div className={styles.rightGroup}>
-          <div className={styles.cartContainer}>
+          <div className={styles.cartContainer} onClick={toggleCart}>
             <span className={styles.cartIcon}>🛒</span>
             {cartCount > 0 && (
               <span className={styles.cartCount}>{cartCount}</span>
@@ -30,3 +30,4 @@ export const Header: FC<HeaderProps> = ({ siteName }) => {
     </header>
   );
 };
+
