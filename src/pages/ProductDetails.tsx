@@ -5,6 +5,7 @@ import { useProductDetails } from "../hooks/useProductDetails";
 import { useCart } from "../stores/CartContext";
 import ImageGallery from "../components/ImageGallery";
 import ProductInfoPanel, { COLORS } from "../components/ProductInfoPanel";
+import ProductDetailsSection from "../components/ProductDetailsSection";
 import type { ColorOption } from "../components/ProductInfoPanel";
 import styles from "./ProductDetails.module.scss";
 
@@ -176,6 +177,9 @@ export default function ProductDetails() {
           handleAddToCart={handleAddToCart}
         />
       </div>
+
+      {/* Below-fold: Description, Specifications, Reviews */}
+      <ProductDetailsSection description={product.description} />
     </div>
   );
 }

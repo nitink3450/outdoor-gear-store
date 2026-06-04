@@ -50,3 +50,14 @@
 - **Built-in & Lightweight:** No external state management libraries (such as Redux or Zustand) are required. This reduces bundle size, avoids additional dependency overhead, and matches the project scale.
 - **Perfect Fit for Simple Cart State:** The shopping cart state only needs to be shared across a few components (Header and ProductDetails), making Context API the most suitable choice without over-engineering.
 - **Native React Integration:** Integrates seamlessly with React's built-in state primitives and lifecycle, ensuring predictable state updates and context propagation.
+
+---
+
+## 5. Product Details Section: Why Tabs over Accordion?
+
+- **Side-by-side comparison:** Tabs let users switch between Description, Specifications, and Reviews instantly without scrolling. An accordion stacks panels vertically, pushing content further down the page.
+- **Predictable content height:** Each tab panel occupies the same viewport region, keeping the page layout stable. Accordions cause layout shifts as panels expand/collapse.
+- **Desktop-first UX:** On wide screens (our primary layout), horizontal tab bars are the standard pattern for product detail sections — users expect them. Accordions are better suited for FAQs or mobile-only layouts.
+- **Cleaner visual hierarchy:** A single active panel with a highlighted tab indicator gives a clear focus state. With accordions, multiple panels can be open simultaneously, splitting the user's attention.
+
+---
