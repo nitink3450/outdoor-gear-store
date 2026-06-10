@@ -21,7 +21,6 @@ export interface CartContextType {
     size?: string,
     quantity?: number
   ) => void;
-  removeFromCart: (id: number) => void;
   removeCartItem: (id: number, color?: string, size?: string) => void;
   clearCart: () => void;
 }

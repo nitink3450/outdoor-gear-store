@@ -49,18 +49,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeFromCart = (id: number) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === id);
-      if (existing && existing.quantity > 1) {
-        return prev.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        );
-      }
-      return prev.filter((item) => item.id !== id);
-    });
-  };
-
   const removeCartItem = (id: number, color?: string, size?: string) => {
     setCartItems((prev) =>
       prev.filter(
@@ -81,7 +69,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         isCartOpen,
         toggleCart,
         addToCart,
-        removeFromCart,
         removeCartItem,
         clearCart,
       }}
